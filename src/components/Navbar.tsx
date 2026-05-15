@@ -1,6 +1,10 @@
 import { gsap } from "gsap";
+import { Mail, Menu, X } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
+import { PiLinkedinLogoBold } from "react-icons/pi";
+import { SiRefinedgithub } from "react-icons/si";
 import { Link } from "react-router";
+import { ModeToggle } from "./mode-toggle";
 
 export type PillNavItem = {
   label: string;
@@ -15,11 +19,9 @@ export interface PillNavProps {
   activeHref?: string;
   className?: string;
   ease?: string;
-  baseColor?: string;
-  pillColor?: string;
-  hoveredPillTextColor?: string;
-  pillTextColor?: string;
-  onMobileMenuClick?: () => void;
+  githubUrl?: string;
+  linkedinUrl?: string;
+  mailTo?: string;
   initialLoadAnimation?: boolean;
 }
 
@@ -30,21 +32,17 @@ const Navbar: React.FC<PillNavProps> = ({
   activeHref,
   className = "",
   ease = "power3.easeOut",
-  baseColor = "#fff",
-  pillColor = "#120F17",
-  hoveredPillTextColor = "#120F17",
-  pillTextColor,
-  onMobileMenuClick,
   initialLoadAnimation = true,
+  githubUrl = "https://github.com",
+  linkedinUrl = "https://linkedin.com",
+  mailTo = "mailto:your-email@example.com",
 }) => {
-  const resolvedPillTextColor = pillTextColor ?? baseColor;
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const circleRefs = useRef<Array<HTMLSpanElement | null>>([]);
   const tlRefs = useRef<Array<gsap.core.Timeline | null>>([]);
   const activeTweenRefs = useRef<Array<gsap.core.Tween | null>>([]);
   const logoImgRef = useRef<HTMLImageElement | null>(null);
   const logoTweenRef = useRef<gsap.core.Tween | null>(null);
-  const hamburgerRef = useRef<HTMLButtonElement | null>(null);
   const mobileMenuRef = useRef<HTMLDivElement | null>(null);
   const navItemsRef = useRef<HTMLDivElement | null>(null);
   const logoRef = useRef<HTMLAnchorElement | HTMLElement | null>(null);
@@ -87,23 +85,23 @@ const Navbar: React.FC<PillNavProps> = ({
 
         tl.to(
           circle,
-          { scale: 1.2, xPercent: -50, duration: 2, ease, overwrite: "auto" },
+          { scale: 1.2, xPercent: -50, duration: 0.4, ease, overwrite: "auto" },
           0,
         );
 
         if (label) {
           tl.to(
             label,
-            { y: -(h + 8), duration: 2, ease, overwrite: "auto" },
+            { y: -(h + 8), duration: 0.4, ease, overwrite: "auto" },
             0,
           );
         }
 
         if (white) {
-          gsap.set(white, { y: Math.ceil(h + 100), opacity: 0 });
+          gsap.set(white, { y: Math.ceil(h + 10), opacity: 0 });
           tl.to(
             white,
-            { y: 0, opacity: 1, duration: 2, ease, overwrite: "auto" },
+            { y: 0, opacity: 1, duration: 0.4, ease, overwrite: "auto" },
             0,
           );
         }
@@ -123,29 +121,24 @@ const Navbar: React.FC<PillNavProps> = ({
 
     const menu = mobileMenuRef.current;
     if (menu) {
-      gsap.set(menu, { visibility: "hidden", opacity: 0, scaleY: 1, y: 0 });
+      gsap.set(menu, { visibility: "hidden", opacity: 0, y: -20 });
     }
 
     if (initialLoadAnimation) {
-      const logo = logoRef.current;
+      const logoEl = logoRef.current;
       const navItems = navItemsRef.current;
 
-      if (logo) {
-        gsap.set(logo, { scale: 0 });
-        gsap.to(logo, {
-          scale: 1,
-          duration: 0.6,
-          ease,
-        });
+      if (logoEl) {
+        gsap.fromTo(
+          logoEl,
+          { opacity: 0, x: -20 },
+          { opacity: 1, x: 0, duration: 0.6, ease },
+        );
       }
 
       if (navItems) {
         gsap.set(navItems, { width: 0, overflow: "hidden" });
-        gsap.to(navItems, {
-          width: "auto",
-          duration: 0.6,
-          ease,
-        });
+        gsap.to(navItems, { width: "auto", duration: 0.6, ease });
       }
     }
 
@@ -178,64 +171,32 @@ const Navbar: React.FC<PillNavProps> = ({
     const img = logoImgRef.current;
     if (!img) return;
     logoTweenRef.current?.kill();
-    gsap.set(img, { rotate: 0 });
-    logoTweenRef.current = gsap.to(img, {
-      rotate: 360,
-      duration: 0.2,
-      ease,
-      overwrite: "auto",
-    });
+    logoTweenRef.current = gsap.fromTo(
+      img,
+      { rotate: 0 },
+      { rotate: 360, duration: 0.5, ease: "power2.out" },
+    );
   };
 
   const toggleMobileMenu = () => {
     const newState = !isMobileMenuOpen;
     setIsMobileMenuOpen(newState);
-
-    const hamburger = hamburgerRef.current;
     const menu = mobileMenuRef.current;
-
-    if (hamburger) {
-      const lines = hamburger.querySelectorAll(".hamburger-line");
-      if (newState) {
-        gsap.to(lines[0], { rotation: 45, y: 3, duration: 0.3, ease });
-        gsap.to(lines[1], { rotation: -45, y: -3, duration: 0.3, ease });
-      } else {
-        gsap.to(lines[0], { rotation: 0, y: 0, duration: 0.3, ease });
-        gsap.to(lines[1], { rotation: 0, y: 0, duration: 0.3, ease });
-      }
-    }
 
     if (menu) {
       if (newState) {
         gsap.set(menu, { visibility: "visible" });
-        gsap.fromTo(
-          menu,
-          { opacity: 0, y: 10, scaleY: 1 },
-          {
-            opacity: 1,
-            y: 0,
-            scaleY: 1,
-            duration: 0.3,
-            ease,
-            transformOrigin: "top center",
-          },
-        );
+        gsap.to(menu, { opacity: 1, y: 0, duration: 0.3, ease });
       } else {
         gsap.to(menu, {
           opacity: 0,
-          y: 10,
-          scaleY: 1,
+          y: -20,
           duration: 0.2,
           ease,
-          transformOrigin: "top center",
-          onComplete: () => {
-            gsap.set(menu, { visibility: "hidden" });
-          },
+          onComplete: () => gsap.set(menu, { visibility: "hidden" }),
         });
       }
     }
-
-    onMobileMenuClick?.();
   };
 
   const isExternalLink = (href: string) =>
@@ -249,89 +210,94 @@ const Navbar: React.FC<PillNavProps> = ({
   const isRouterLink = (href?: string) => href && !isExternalLink(href);
 
   const cssVars = {
-    ["--base"]: baseColor,
-    ["--pill-bg"]: pillColor,
-    ["--hover-text"]: hoveredPillTextColor,
-    ["--pill-text"]: resolvedPillTextColor,
-    ["--nav-h"]: "42px",
-    ["--logo"]: "36px",
-    ["--pill-pad-x"]: "18px",
-    ["--pill-gap"]: "3px",
+    ["--base"]:
+      "var(--card)" ,
+    ["--pill-bg"]: "var(--background)" ,
+    ["--hover-text"]:
+      "var(--primary)" ,
+    ["--pill-text"]: "var(--foreground)" ,
+    ["--nav-h"]: "48px",
+    ["--pill-pad-x"]: "20px",
+    ["--pill-gap"]: "4px",
   } as React.CSSProperties;
 
-  return (
-    <div className="absolute top-[1em] z-100 w-full left-0 md:flex md:justify-center px-4">
-      <nav
-        className={`flex items-center justify-between box-border md:px-0 ${className}`}
-        aria-label="Primary"
-        style={cssVars}
-      >
-        {isRouterLink(items?.[0]?.href) ? (
-          <Link
-            to={items[0].href}
-            aria-label="Home"
-            onMouseEnter={handleLogoEnter}
-            role="menuitem"
-            ref={(el) => {
-              logoRef.current = el;
-            }}
-            className="rounded-full p-2 inline-flex items-center justify-center overflow-hidden"
-            style={{
-              width: "var(--nav-h)",
-              height: "var(--nav-h)",
-              background: "var(--base, #000)",
-            }}
-          >
-            <img
-              src={logo}
-              alt={logoAlt}
-              ref={logoImgRef}
-              className="w-full h-full object-cover block"
-            />
-          </Link>
-        ) : (
-          <a
-            href={items?.[0]?.href || "#"}
-            aria-label="Home"
-            onMouseEnter={handleLogoEnter}
-            ref={(el) => {
-              logoRef.current = el;
-            }}
-            className="rounded-full p-2 inline-flex items-center justify-center overflow-hidden"
-            style={{
-              width: "var(--nav-h)",
-              height: "var(--nav-h)",
-              background: "var(--base, #000)",
-            }}
-          >
-            <img
-              src={logo}
-              alt={logoAlt}
-              ref={logoImgRef}
-              className="w-full h-full object-cover block"
-            />
-          </a>
-        )}
+  const iconClass =
+    "p-2 rounded-full transition-colors duration-200 hover:bg-muted text-foreground/80 hover:text-primary";
 
+  return (
+    <div
+      className="fixed top-4 left-0 w-full z-50 px-4 md:px-8"
+      style={cssVars}
+    >
+      {/* Navbar Container এ গ্লাস ইফেক্ট (glass) এবং বর্ডার অ্যাড করা হয়েছে */}
+      <div
+        className={`container mx-auto flex items-center justify-between glass border border-border/40 rounded-full px-6 py-2 shadow-lg backdrop-blur-md ${className}`}
+      >
+        {/* LEFT SIDE: LOGO & NAME */}
+        <div className="flex items-center gap-3">
+          {isRouterLink(items?.[0]?.href) ? (
+            <Link
+              to={items[0].href}
+              aria-label="Home"
+              onMouseEnter={handleLogoEnter}
+              ref={(el) => {
+                logoRef.current = el;
+              }}
+              className="flex items-center gap-2 group no-underline"
+            >
+              <div className="w-9 h-9 rounded-full overflow-hidden border border-border bg-muted flex items-center justify-center transition-transform group-hover:scale-105">
+                <img
+                  src={logo}
+                  alt={logoAlt}
+                  ref={logoImgRef}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <span className="font-bold text-lg tracking-tight text-foreground group-hover:text-primary transition-colors">
+                Binoy
+              </span>
+            </Link>
+          ) : (
+            <a
+              href={items?.[0]?.href || "#"}
+              aria-label="Home"
+              onMouseEnter={handleLogoEnter}
+              ref={(el) => {
+                logoRef.current = el as HTMLElement;
+              }}
+              className="flex items-center gap-2 group no-underline"
+            >
+              <div className="w-9 h-9 rounded-full overflow-hidden border border-border bg-muted flex items-center justify-center transition-transform group-hover:scale-105">
+                <img
+                  src={logo}
+                  alt={logoAlt}
+                  ref={logoImgRef}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <span className="font-bold text-lg tracking-tight text-foreground group-hover:text-primary transition-colors">
+                Binoy
+              </span>
+            </a>
+          )}
+        </div>
+
+        {/* CENTER SIDE: NAV ITEMS (DESKTOP) */}
         <div
           ref={navItemsRef}
-          className="relative items-center rounded-full hidden md:flex ml-2"
-          style={{
-            height: "var(--nav-h)",
-            background: "var(--base, #000)",
-          }}
+          className="relative items-center rounded-full hidden md:flex border border-border/30 shadow-inner"
+          style={{ height: "var(--nav-h)", background: "var(--base)" }}
         >
           <ul
             role="menubar"
-            className="list-none flex items-stretch m-0 p-0.75 h-full"
+            className="list-none flex items-center m-0 p-1 h-full"
             style={{ gap: "var(--pill-gap)" }}
           >
             {items.map((item, i) => {
               const isActive = activeHref === item.href;
-
               const pillStyle: React.CSSProperties = {
-                background: "var(--pill-bg, #fff)",
-                color: "var(--pill-text, var(--base, #000))",
+                background: "var(--pill-bg)",
+                color: isActive ? "var(--primary)" : "var(--pill-text)",
                 paddingLeft: "var(--pill-pad-x)",
                 paddingRight: "var(--pill-pad-x)",
               };
@@ -341,7 +307,7 @@ const Navbar: React.FC<PillNavProps> = ({
                   <span
                     className="hover-circle absolute left-1/2 bottom-0 rounded-full z-1 block pointer-events-none"
                     style={{
-                      background: "var(--base, #000)",
+                      background: "var(--base)",
                       willChange: "transform",
                     }}
                     aria-hidden="true"
@@ -357,9 +323,10 @@ const Navbar: React.FC<PillNavProps> = ({
                       {item.label}
                     </span>
                     <span
-                      className="pill-label-hover absolute left-0 top-0 z-3 inline-block"
+                      className="pill-label-hover absolute left-0 top-0 z-3 inline-block font-semibold"
                       style={{
-                        color: "var(--hover-text, #fff)",
+                        color: "var(--hover-text)",
+                        // geometryChange: "transform",
                         willChange: "transform, opacity",
                       }}
                       aria-hidden="true"
@@ -368,17 +335,13 @@ const Navbar: React.FC<PillNavProps> = ({
                     </span>
                   </span>
                   {isActive && (
-                    <span
-                      className="absolute left-1/2 -bottom-1.5 -translate-x-1/2 w-3 h-3 rounded-full z-4"
-                      style={{ background: "var(--base, #000)" }}
-                      aria-hidden="true"
-                    />
+                    <span className="absolute left-1/2 bottom-1.5 -translate-x-1/2 w-1 h-1 rounded-full bg-primary z-4 shadow-[0_0_8px_var(--color-primary)]" />
                   )}
                 </>
               );
 
               const basePillClasses =
-                "relative overflow-hidden inline-flex items-center justify-center h-full no-underline rounded-full box-border font-semibold text-[16px] leading-[0] uppercase tracking-[0.2px] whitespace-nowrap cursor-pointer px-0";
+                "relative overflow-hidden inline-flex items-center justify-center h-full no-underline rounded-full box-border font-medium text-xs uppercase tracking-wider whitespace-nowrap cursor-pointer transition-colors duration-200";
 
               return (
                 <li key={item.href} role="none" className="flex h-full">
@@ -413,64 +376,61 @@ const Navbar: React.FC<PillNavProps> = ({
           </ul>
         </div>
 
-        <button
-          ref={hamburgerRef}
-          onClick={toggleMobileMenu}
-          aria-label="Toggle menu"
-          aria-expanded={isMobileMenuOpen}
-          className="md:hidden rounded-full border-0 flex flex-col items-center justify-center gap-1 cursor-pointer p-0 relative"
-          style={{
-            width: "var(--nav-h)",
-            height: "var(--nav-h)",
-            background: "var(--base, #000)",
-          }}
-        >
-          <span
-            className="hamburger-line w-4 h-0.5 rounded origin-center transition-all duration-10 ease-[cubic-bezier(0.25,0.1,0.25,1)]"
-            style={{ background: "var(--pill-bg, #fff)" }}
-          />
-          <span
-            className="hamburger-line w-4 h-0.5 rounded origin-center transition-all duration-10 ease-[cubic-bezier(0.25,0.1,0.25,1)]"
-            style={{ background: "var(--pill-bg, #fff)" }}
-          />
-        </button>
-      </nav>
+        {/* RIGHT SIDE: UTILITIES & SOCIALS */}
+        <div className="hidden md:flex items-center gap-1">
+          <a
+            href={githubUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={iconClass}
+            aria-label="GitHub"
+          >
+            <SiRefinedgithub size={18} />
+          </a>
+          <a
+            href={linkedinUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={iconClass}
+            aria-label="LinkedIn"
+          >
+            <PiLinkedinLogoBold size={18} />
+          </a>
+          <a href={mailTo} className={iconClass} aria-label="Email">
+            <Mail size={18} />
+          </a>
+          <div className="h-4 w-px bg-border/60 mx-2" />
+          <ModeToggle />
+        </div>
 
+        {/* MOBILE HAMBURGER BUTTON */}
+        <div className="flex items-center gap-2 md:hidden">
+          <ModeToggle />
+          <button
+            onClick={toggleMobileMenu}
+            aria-label="Toggle menu"
+            aria-expanded={isMobileMenuOpen}
+            className="p-2 rounded-full hover:bg-muted text-foreground transition-colors"
+          >
+            {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
+        </div>
+      </div>
+
+      {/* MOBILE MENU DROP DOWN */}
       <div
         ref={mobileMenuRef}
-        className="md:hidden absolute top-[3em] left-4 right-4 rounded-[27px] shadow-[0_8px_32px_rgba(0,0,0,0.12)] z-998 origin-top"
-        style={{
-          ...cssVars,
-          background: "var(--base, #f0f0f0)",
-        }}
+        className="md:hidden absolute top-full left-4 right-4 mt-2 bg-background/95 backdrop-blur-lg border border-border/50 rounded-2xl p-4 shadow-xl origin-top"
       >
-        <ul className="list-none m-0 p-0.75 flex flex-col gap-0.75">
+        <ul className="list-none m-0 p-0 flex flex-col gap-1">
           {items.map((item) => {
-            const defaultStyle: React.CSSProperties = {
-              background: "var(--pill-bg, #fff)",
-              color: "var(--pill-text, #fff)",
-            };
-            const hoverIn = (e: React.MouseEvent<HTMLAnchorElement>) => {
-              e.currentTarget.style.background = "var(--base)";
-              e.currentTarget.style.color = "var(--hover-text, #fff)";
-            };
-            const hoverOut = (e: React.MouseEvent<HTMLAnchorElement>) => {
-              e.currentTarget.style.background = "var(--pill-bg, #fff)";
-              e.currentTarget.style.color = "var(--pill-text, #fff)";
-            };
-
-            const linkClasses =
-              "block py-3 px-4 text-[16px] font-medium rounded-[50px] transition-all duration-200 ease-[cubic-bezier(0.25,0.1,0.25,1)]";
-
+            const isActive = activeHref === item.href;
             return (
               <li key={item.href}>
                 {isRouterLink(item.href) ? (
                   <Link
                     to={item.href}
-                    className={linkClasses}
-                    style={defaultStyle}
-                    onMouseEnter={hoverIn}
-                    onMouseLeave={hoverOut}
+                    className={`block py-2.5 px-4 text-sm font-medium rounded-xl hover:bg-muted transition-all ${isActive ? "text-primary bg-primary/5 font-semibold" : "text-foreground/80"}`}
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     {item.label}
@@ -478,10 +438,7 @@ const Navbar: React.FC<PillNavProps> = ({
                 ) : (
                   <a
                     href={item.href}
-                    className={linkClasses}
-                    style={defaultStyle}
-                    onMouseEnter={hoverIn}
-                    onMouseLeave={hoverOut}
+                    className={`block py-2.5 px-4 text-sm font-medium rounded-xl hover:bg-muted transition-all ${isActive ? "text-primary bg-primary/5 font-semibold" : "text-foreground/80"}`}
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     {item.label}
@@ -491,6 +448,30 @@ const Navbar: React.FC<PillNavProps> = ({
             );
           })}
         </ul>
+        <div className="border-t border-border/50 mt-3 pt-3 flex justify-center gap-6">
+          <a
+            href={githubUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-foreground/70 hover:text-primary transition-colors"
+          >
+            <SiRefinedgithub size={18} />
+          </a>
+          <a
+            href={linkedinUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-foreground/70 hover:text-primary transition-colors"
+          >
+            <PiLinkedinLogoBold size={18} />
+          </a>
+          <a
+            href={mailTo}
+            className="text-foreground/70 hover:text-primary transition-colors"
+          >
+            <Mail size={18} />
+          </a>
+        </div>
       </div>
     </div>
   );

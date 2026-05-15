@@ -1,12 +1,13 @@
 import Hero from "../components/Hero";
 import Navbar from "../components/Navbar";
 import logo from "/techzaa.png";
+
 export default function HomePage() {
   return (
     <>
       <Navbar
         logo={logo}
-        logoAlt="Logo"
+        logoAlt="TechZaa Logo"
         items={[
           { label: "Home", href: "/" },
           { label: "About", href: "/about" },
@@ -15,14 +16,13 @@ export default function HomePage() {
         ]}
         activeHref="/"
         className="custom-nav"
-        ease="power2.easeOut"
-        baseColor="#000000"
-        pillColor="#ffffff"
-        hoveredPillTextColor="#ffffff"
-        pillTextColor="#000000"
-        initialLoadAnimation={false}
+        ease="power3.easeOut"
+        initialLoadAnimation={true} 
+        githubUrl="https://github.com/dev-sharafat" 
+        linkedinUrl="https://www.linkedin.com/in/sharafathassain23" 
+        mailTo="mailto:mdsharafathassainbinoy@gmail.com" 
       />
-      <Hero/>
+      <Hero />
     </>
   );
 }

@@ -245,7 +245,7 @@ const Navbar: React.FC<PillNavProps> = ({
               }}
               className="flex items-center gap-2 group no-underline"
             >
-              <div className="w-9 h-9 rounded-full overflow-hidden border border-border bg-muted flex items-center justify-center transition-transform group-hover:scale-105">
+              <div className="rounded-full overflow-hidden  flex items-center justify-center transition-transform">
                 <img
                   src={logo}
                   alt={logoAlt}
@@ -253,8 +253,8 @@ const Navbar: React.FC<PillNavProps> = ({
                   className="w-full h-full object-cover"
                 />
               </div>
-              <span className="font-bold text-lg tracking-tight text-foreground group-hover:text-primary transition-colors">
-                Binoy
+              <span className="font-bold text-lg tracking-tight text-foreground group-hover:text-primary neon-text-glow transition-colors">
+                Sharafat
               </span>
             </Link>
           ) : (

@@ -3,14 +3,14 @@ import Hero from "../components/Hero";
 import Navbar from "../components/Navbar";
 import Services from "../components/Service";
 import Skills from "../components/Skills";
-import logo from "/techzaa.png";
+import logo from "/logo.png";
 
 export default function HomePage() {
   return (
     <>
       <Navbar
         logo={logo}
-        logoAlt="TechZaa Logo"
+        logoAlt="Logo"
         items={[
           { label: "Home", href: "/" },
           { label: "About", href: "/about" },

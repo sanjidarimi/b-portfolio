@@ -22,7 +22,7 @@ const Hero = () => {
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="relative z-20 w-full max-w-md aspect-square rounded-2xl overflow-hidden border-4 shadow-2xl neon-glow "
+            className="relative z-20 w-full max-w-md aspect-square rounded-2xl overflow-hidden animate-float shadow-2xl neon-glow"
           >
             <img
               src="/me.png"
@@ -37,13 +37,10 @@ const Hero = () => {
             animate={{ opacity: 1, x: 0 }}
             className="text-2xl font-bold tracking-wider"
           >
-            HI, I'M{" "}
-            <span className="neon-text-glow dark:text-primary text-5xl border-b-2 ">
-              Sharafat Hossain
-            </span>
+            HI, I'M <span className="text-5xl ">Sharafat Hossain</span>
           </motion.h2>
 
-          <div className="">
+          <div>
             <AnimatePresence mode="wait">
               <motion.h1
                 key={roles[index]}
@@ -51,7 +48,7 @@ const Hero = () => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.5 }}
-                className="text-4xl uppercase italic leading-none"
+                className="text-4xl uppercase neon-text-glow  italic leading-none"
               >
                 {roles[index]}
               </motion.h1>

@@ -67,20 +67,17 @@ const About: React.FC = () => {
           viewport={{ once: true, margin: "-100px" }}
           variants={staggerContainer}
         >
-          
-            <SectionBadge
-              icon={<FiUser className="text-sm" />}
-              text="//_About_Me"
-            / >
+          <SectionBadge
+            icon={<FiUser className="text-sm" />}
+            text="//_About_Me"
+          />
 
           <motion.h2
             variants={fadeUp}
             className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-foreground leading-tight"
           >
             Architecting stable, scalable{" "}
-            <span className="text-primary selection:bg-primary/30">
-              digital backbones
-            </span>{" "}
+            <span className="border-b-2 text-primary">digital backbones</span>{" "}
             for modern applications.
           </motion.h2>
 

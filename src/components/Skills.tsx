@@ -39,7 +39,6 @@ const Skills: React.FC = () => {
     },
   };
 
-
   const innerOrbitSkills: Skill[] = [
     {
       name: "Node.js",
@@ -125,9 +124,7 @@ const Skills: React.FC = () => {
             className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-foreground leading-tight"
           >
             Forging high-performance engines with a{" "}
-            <span className="text-primary selection:bg-primary/30">
-              modern stack.
-            </span>
+            <span className="text-primary">modern stack.</span>
           </motion.h2>
 
           <hr className="border-border/50 w-24" />

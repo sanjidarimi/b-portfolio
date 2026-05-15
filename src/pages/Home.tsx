@@ -1,3 +1,4 @@
+import About from "../components/About";
 import Hero from "../components/Hero";
 import Navbar from "../components/Navbar";
 import logo from "/techzaa.png";
@@ -23,6 +24,7 @@ export default function HomePage() {
         mailTo="mailto:mdsharafathassainbinoy@gmail.com" 
       />
       <Hero />
+      <About/>
     </>
   );
 }

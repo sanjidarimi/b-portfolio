@@ -1,6 +1,7 @@
 import About from "../components/About";
 import Hero from "../components/Hero";
 import Navbar from "../components/Navbar";
+import Services from "../components/Service";
 import logo from "/techzaa.png";
 
 export default function HomePage() {
@@ -25,6 +26,7 @@ export default function HomePage() {
       />
       <Hero />
       <About/>
+      <Services/>
     </>
   );
 }

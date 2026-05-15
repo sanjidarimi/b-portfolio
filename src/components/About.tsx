@@ -8,6 +8,7 @@ import {
   FiTarget,
   FiUser,
 } from "react-icons/fi";
+import SectionBadge from "./shared/sectionBadge";
 
 interface EducationMilestone {
   id: string;
@@ -57,7 +58,7 @@ const About: React.FC = () => {
   ];
 
   return (
-    <section className="relative w-full pb-24 px-4 sm:px-8 lg:px-16 overflow-hidden bg-background">
+    <section className="relative w-full pb-10 px-4 sm:px-8 lg:px-16 overflow-hidden bg-background">
       <div className="container mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
         <motion.div
           className="lg:col-span-7 space-y-4"
@@ -66,13 +67,11 @@ const About: React.FC = () => {
           viewport={{ once: true, margin: "-100px" }}
           variants={staggerContainer}
         >
-          <motion.div
-            variants={fadeUp}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-border/40 text-xs uppercase tracking-[0.2em] font-semibold text-primary neon-text-glow"
-          >
-            <FiUser className="text-sm" />
-            <span>//_About_Me</span>
-          </motion.div>
+          
+            <SectionBadge
+              icon={<FiUser className="text-sm" />}
+              text="//_About_Me"
+            / >
 
           <motion.h2
             variants={fadeUp}

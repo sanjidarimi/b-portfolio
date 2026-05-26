@@ -1,8 +1,7 @@
 import { motion, type Variants } from "framer-motion";
 import React from "react";
-import { FiCpu, FiDatabase, FiLayers, FiServer } from "react-icons/fi";
+import { FiCpu, FiDatabase } from "react-icons/fi";
 import {
-  SiDotnet,
   SiExpress,
   SiGraphql,
   SiMongodb,
@@ -10,6 +9,7 @@ import {
   SiNodedotjs,
   SiPostgresql,
   SiPrisma,
+  SiTypescript,
 } from "react-icons/si";
 import SectionBadge from "./shared/sectionBadge";
 
@@ -92,21 +92,54 @@ const Skills: React.FC = () => {
       angle: 216,
     },
     {
-      name: ".NET / C#",
-      icon: <SiDotnet />,
+      name: "TS",
+      icon: <SiTypescript />,
       colorClass: "border-neon-purple text-neon-purple",
       angle: 288,
     },
   ];
+  const allSkills = [
+    {
+      name: "Node.js",
+      icon: <SiNodedotjs />,
+    },
+    {
+      name: "Express",
+      icon: <SiExpress />,
+    },
+    {
+      name: "NestJS",
+      icon: <SiNestjs />,
+    },
+    {
+      name: "PostgreSQL",
+      icon: <SiPostgresql />,
+    },
+    {
+      name: "MongoDB",
+      icon: <SiMongodb />,
+    },
+    {
+      name: "GraphQL",
+      icon: <SiGraphql />,
+    },
+    {
+      name: "Prisma",
+      icon: <SiPrisma />,
+    },
+    {
+      name: "TypeScript",
+      icon: <SiTypescript />,
+    },
+  ];
 
   return (
-    <section className="relative w-full py-24 px-4 sm:px-8 lg:px-16 overflow-hidden bg-background font-sans border-t border-border/20">
+    <section className="relative w-full py-24 px-4 sm:px-8 lg:px-16 overflow-hidden bg-background border-t border-border">
       {/* Background Glows */}
       <div className="absolute top-1/3 right-0 w-80 h-80 bg-neon-purple/5 rounded-full blur-[130px] pointer-events-none" />
       <div className="absolute bottom-1/3 left-0 w-80 h-80 bg-primary/5 rounded-full blur-2xl pointer-events-none" />
 
-      <div className="container mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
-        {/* ================= LEFT SIDE: HOOK & CONTEXT ================= */}
+      <div className="container mx-auto grid grid-cols-1 lg:grid-cols-12 items-center">
         <motion.div
           className="lg:col-span-5 space-y-6"
           initial="hidden"
@@ -139,26 +172,25 @@ const Skills: React.FC = () => {
             the tools I command.
           </motion.p>
 
-          <motion.div
-            variants={fadeUp}
-            className="pt-4 flex flex-wrap gap-3 text-xs font-mono text-muted-foreground"
-          >
-            <span className="flex items-center gap-1.5 px-3 py-1.5 rounded bg-muted/40 border border-border/50">
-              <FiServer className="text-primary" /> REST APIs
-            </span>
-            <span className="flex items-center gap-1.5 px-3 py-1.5 rounded bg-muted/40 border border-border/50">
-              <FiDatabase className="text-neon-green" /> Database Optimization
-            </span>
-            <span className="flex items-center gap-1.5 px-3 py-1.5 rounded bg-muted/40 border border-border/50">
-              <FiLayers className="text-neon-purple" /> Microservices
-            </span>
+          <motion.div variants={fadeUp} className="pt-8 flex flex-wrap gap-3">
+            {allSkills.map((tech) => (
+              <div
+                key={tech.name}
+                className={`flex items-center gap-1 px-4 py-2 rounded-xl border bg-muted/20 backdrop-blur-sm neon-text-glow glass`}
+              >
+                <span className="text-lg">{tech.icon}</span>
+
+                <span className="text-sm font-medium text-foreground">
+                  {tech.name}
+                </span>
+              </div>
+            ))}
           </motion.div>
         </motion.div>
 
-        {/* ================= RIGHT SIDE: SKILLS CYBER ORBIT ================= */}
         <div className="lg:col-span-7 flex items-center justify-center min-h-125 w-full relative select-none">
           <div className="relative w-md h-112 flex items-center justify-center scale-90 sm:scale-100">
-            {/* CENTRAL BACKEND KERNEL NODE */}
+          
             <div className="absolute w-20 h-20 rounded-full shimmer border border-primary/40 flex flex-col items-center justify-center z-30 shadow-lg shadow-primary/10 animate-pulse">
               <FiDatabase className="text-2xl text-primary neon-text-glow" />
               <span className="text-[9px] font-mono tracking-widest mt-1 text-muted-foreground uppercase">
@@ -186,13 +218,13 @@ const Skills: React.FC = () => {
                   </div>
 
                   {/* Hover Floating Data Interface */}
-                  <div className="absolute left-1/2 bottom-14 -translate-x-1/2 pointer-events-none transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 z-40 min-w-30">
+                  {/* <div className="absolute left-1/2 bottom-14 -translate-x-1/2 pointer-events-none transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 z-40 min-w-30">
                     <div className=" px-3 py-2 rounded-xl text-center shadow-2xl">
                       <p className="text-xs font-bold text-foreground whitespace-nowrap">
                         {skill.name}
                       </p>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               ))}
             </div>

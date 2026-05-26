@@ -276,7 +276,7 @@ const Navbar: React.FC<PillNavProps> = ({
                 />
               </div>
               <span className="font-bold text-lg tracking-tight text-foreground group-hover:text-primary transition-colors">
-                Binoy
+                Sharafat
               </span>
             </a>
           )}
@@ -286,7 +286,7 @@ const Navbar: React.FC<PillNavProps> = ({
         <div
           ref={navItemsRef}
           className="relative items-center rounded-full hidden md:flex border border-border/30 shadow-inner"
-          style={{ height: "var(--nav-h)", background: "var(--base)" }}
+          style={{ height: "var(--nav-h)", background: "var(--background)" }}
         >
           <ul
             role="menubar"

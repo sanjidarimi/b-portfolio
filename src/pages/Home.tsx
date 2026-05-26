@@ -1,4 +1,5 @@
 import About from "../components/About";
+import { ContactSection } from "../components/ContactSection";
 import Hero from "../components/Hero";
 import Navbar from "../components/Navbar";
 import Services from "../components/Service";
@@ -29,6 +30,7 @@ export default function HomePage() {
       <About/>
       <Services/>
       <Skills/>
+      <ContactSection/>
     </>
   );
 }

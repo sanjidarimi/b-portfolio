@@ -2,6 +2,7 @@ import { ArrowUp } from "lucide-react";
 import React from "react";
 import { FiGithub, FiLinkedin, FiMail } from "react-icons/fi";
 import { PiDiscordLogo } from "react-icons/pi";
+import { Link } from "react-router";
 import logo from "/logo.png";
 export const Footer: React.FC = () => {
   const scrollToTop = () => {
@@ -32,30 +33,30 @@ export const Footer: React.FC = () => {
           {/* Quick Socials & Contact */}
           <div className="flex flex-col items-center space-y-4">
             <div className="flex items-center gap-4">
-              <a
-                href="#"
+              <Link
+                to="#"
                 className="p-2.5 rounded-lg border border-border hover:border-primary/50 text-muted-foreground hover:text-primary transition-all duration-300"
               >
                 <FiGithub size={18} />
-              </a>
-              <a
-                href="#"
+              </Link>
+              <Link
+                to="#"
                 className="p-2.5 rounded-lg border border-border bg-muted/20 hover:border-primary/50 text-muted-foreground hover:text-primary transition-all duration-300"
               >
                 <FiLinkedin size={18} />
-              </a>
-              <a
-                href="#"
+              </Link>
+              <Link
+                to="#"
                 className="p-2.5 rounded-lg border border-border bg-muted/20 hover:border-primary/50 text-muted-foreground hover:text-primary transition-all duration-300"
               >
                 <PiDiscordLogo size={18} />
-              </a>
-              <a
-                href="mailto:your@email.com"
+              </Link>
+              <Link
+                to="mailto:your@email.com"
                 className="p-2.5 rounded-lg border border-border bg-muted/20 hover:border-primary/50 text-muted-foreground hover:text-primary transition-all duration-300"
               >
                 <FiMail size={18} />
-              </a>
+              </Link>
             </div>
             <span className="text-[10px] font-mono text-muted-foreground uppercase tracking-widest">
               Let's build something efficient
@@ -63,10 +64,10 @@ export const Footer: React.FC = () => {
           </div>
 
           {/* Navigation & Action */}
-          <div className="flex flex-col items-center md:items-end space-y-4">
+       
             <button
               onClick={scrollToTop}
-              className="group flex items-center gap-2 text-xs font-mono uppercase text-muted-foreground hover:text-primary transition-colors duration-300"
+              className="group cursor-pointer flex items-center gap-2 text-xs font-mono uppercase text-muted-foreground hover:text-primary transition-colors duration-300"
             >
               Back to system top
               <ArrowUp
@@ -74,10 +75,7 @@ export const Footer: React.FC = () => {
                 className="group-hover:-translate-y-1 transition-transform"
               />
             </button>
-            <div className="text-[10px] text-muted-foreground/60 font-mono">
-              VER: 1.0.4 | SYSTEM_STABLE
-            </div>
-          </div>
+        
         </div>
       </div>
     </footer>

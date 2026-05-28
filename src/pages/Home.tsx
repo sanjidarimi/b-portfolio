@@ -1,38 +1,29 @@
+// src/pages/Home.tsx
 import About from "../components/About";
 import { ContactSection } from "../components/ContactSection";
-import { Footer } from "../components/Footer";
 import Hero from "../components/Hero";
-import Navbar from "../components/Navbar";
+import { ProjectSection } from "../components/ProjectSection";
 import Services from "../components/Service";
 import Skills from "../components/Skills";
-import logo from "/logo.png";
 
 export default function HomePage() {
   return (
     <>
-      <Navbar
-        logo={logo}
-        logoAlt="Logo"
-        items={[
-          { label: "Home", href: "/" },
-          { label: "About", href: "/about" },
-          { label: "Services", href: "/services" },
-          { label: "Contact", href: "/contact" },
-        ]}
-        activeHref="/"
-        className="custom-nav"
-        ease="power3.easeOut"
-        initialLoadAnimation={true} 
-        githubUrl="https://github.com/dev-sharafat" 
-        linkedinUrl="https://www.linkedin.com/in/sharafathassain23" 
-        mailTo="mailto:mdsharafathassainbinoy@gmail.com" 
-      />
       <Hero />
-      <About/>
-      <Services/>
-      <Skills/>
-      <ContactSection/>
-      <Footer/>
+      <div id="about">
+        <About />
+      </div>
+      <div id="services">
+        <Services />
+      </div>
+      <Skills />
+      
+      <div id="projects"> 
+        <ProjectSection />
+      </div>
+      <div id="contact">
+        <ContactSection />
+      </div>
     </>
   );
 }

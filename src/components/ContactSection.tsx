@@ -51,7 +51,7 @@ export const ContactSection: React.FC = () => {
   };
 
   return (
-    <section className="relative w-full flex items-center justify-center p-4 md:p-8 overflow-hidden">
+    <section className="py-20 px-4 w-full flex items-center justify-center overflow-hidden">
       {/* Main Container */}
       <div className="w-full container grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch relative z-10">
         {/* LEFT COLUMN: Why Contact Me */}

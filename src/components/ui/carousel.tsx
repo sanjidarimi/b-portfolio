@@ -3,10 +3,11 @@ import useEmblaCarousel, {
   type UseEmblaCarouselType,
 } from "embla-carousel-react"
 
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
+
 import { HugeiconsIcon } from "@hugeicons/react"
 import { ArrowLeft01Icon, ArrowRight01Icon } from "@hugeicons/core-free-icons"
+import { cn } from "../../lib/utils"
+import { Button } from "./button"
 
 type CarouselApi = UseEmblaCarouselType[1]
 type UseCarouselParameters = Parameters<typeof useEmblaCarousel>
@@ -94,6 +95,7 @@ function Carousel({
 
   React.useEffect(() => {
     if (!api) return
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     onSelect(api)
     api.on("reInit", onSelect)
     api.on("select", onSelect)
@@ -237,5 +239,5 @@ export {
   CarouselItem,
   CarouselPrevious,
   CarouselNext,
-  useCarousel,
+  // useCarousel,
 }
